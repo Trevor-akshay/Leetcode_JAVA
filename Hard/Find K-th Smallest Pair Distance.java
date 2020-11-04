@@ -9,7 +9,7 @@ class Solution {
             int count = 0, left = 0;
             
             
-            for (int right = 0; right < nums.length; ++right) {
+            for (int right = 1; right < nums.length; right++) {
                 while (true) {
                     int diff = nums[right] - nums[left];
                     if(diff > mid) left++;
