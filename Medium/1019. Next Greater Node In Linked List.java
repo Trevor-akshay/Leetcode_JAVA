@@ -10,30 +10,33 @@
  */
 class Solution {
     public int[] nextLargerNodes(ListNode head) {
-         var temp = head;
-        var copy = temp;
-        var dummy = head.next;
-        int length = 0; //  2  1   5
-        while (temp!=null){
-            int value = temp.val;
-            while (dummy !=null){
-                if(dummy.val > temp.val){
-                    temp.val = dummy.val;
-                    break;
-                }
-                dummy = dummy.next;
-            }
-            if(temp.val== value)
-                temp.val = 0;
+      int length = 0;
+        var current = head;
+        while (current!=null){
             length++;
-            dummy = temp.next;
-            temp = temp.next;
+            current = current.next;
         }
-       int[] result = new int[length];
-        for(int i = 0;i<length;i++){
-            result[i] = copy.val;
-            copy = copy.next;
+        int[] clone = new int[length];
+        int index = 0;
+        while (head!=null){
+            clone[index++]  = head.val;
+            head = head.next;
         }
+        int[] result = new int[length];
+        Stack<Integer> stack = new Stack<>();
+        for(int i = length-1;i>=0;i--){ // 2  1  5
+            int element = clone[i];
+            while (!stack.empty() && element >= stack.peek()){
+                stack.pop();
+            }
+            if(stack.empty()){
+                result[i] = 0;
+            }else
+                result[i] = stack.peek();
+
+            stack.push(clone[i]);
+        }
+
         return result;
     }
 }
