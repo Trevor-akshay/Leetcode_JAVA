@@ -1,32 +1,33 @@
 class Solution {
     public int calPoints(String[] ops) {
-        Stack<Integer> stack = new Stack<>();
+       LinkedList<Integer> list = new LinkedList<>();
+        int sum = 0;
         for(var op : ops){
-            switch (op) {
-                case "C":
-                    stack.pop();
-                    break;
-                case "D": {
-                    var item = stack.peek();
-                    stack.push(item * 2);
+            switch (op){
+                case "C":{
+                    sum -= list.removeLast();
+                    //list.removeLast();
                     break;
                 }
-                case "+": {
-                    var item = stack.pop();
-                    var item2 = stack.pop();
-                    stack.push(item2);
-                    stack.push(item);
-                    stack.push(item + item2);
+                case "D":{
+                    int item = list.getLast();
+                    list.addLast(item*2);
+                    sum+=item*2;
                     break;
                 }
-                default:
-                    stack.push(Integer.parseInt(op));
+                case "+":{
+                    int value = list.get(list.size()-2)+list.getLast();
+                    list.addLast(value);
+                    sum+=value;
                     break;
+                }
+                default:{
+                    list.addLast(Integer.parseInt(op));
+                    sum+=Integer.parseInt(op);
+                    break;
+                }
             }
         }
-        int sum = 0;
-        while (!stack.empty())
-            sum+=stack.pop();
         return sum;
     }
 }
